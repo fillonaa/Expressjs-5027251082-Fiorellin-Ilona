@@ -33,6 +33,14 @@ const getProductById = async (req, res) => {
 const createProduct = async (req, res) => {
   try {
     const { name, price } = req.body;
+
+    if (!name || typeof name !== "string") {
+      return res.status(400).json({ message: "name wajib diisi" });
+    }
+    if (price === undefined || price === null || typeof price !== "number") {
+      return res.status(400).json({ message: "price wajib diisi" });
+    }
+
     const product = await prisma.product.create({
       data: { name, price },
     });
@@ -47,6 +55,14 @@ const updateProduct = async (req, res) => {
   try {
     const { id } = req.params;
     const { name, price } = req.body;
+
+    if (!name || typeof name !== "string") {
+      return res.status(400).json({ message: "name wajib diisi" });
+    }
+    if (price === undefined || price === null || typeof price !== "number") {
+      return res.status(400).json({ message: "price wajib diisi" });
+    }
+
     const product = await prisma.product.update({
       where: { id: Number(id) },
       data: { name, price },
